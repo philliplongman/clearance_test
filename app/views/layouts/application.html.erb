@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ClearanceTest</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <% if signed_in? %>
+      <%= link_to "Sign out", sign_out_path, method: :delete %>
+    <% else %>
+      <% unless params[:controller] == "clearance/users" %>
+        <form action=<%= sign_up_path %> >
+          <button type="submit">
+            Sign up
+          </button>
+        </form>
+      <% end %>
+      <% unless params[:controller] == "clearance/sessions" %>
+        <form action=<%= sign_in_path %> >
+          <button type="submit">
+            Sign in
+          </button>
+        </form>
+      <% end %>
+    <% end %>
+
+    <% flash.each do |type, msg| %>
+      <div>
+        <%= msg %>
+      </div>
+    <% end %>
+
+    <%= yield %>
+  </body>
+</html>
